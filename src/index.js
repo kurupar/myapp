@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import HelloWorld from './HelloWorld';
 import CountApp from './CountApp';
+import TodoApp from './TodoApp';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <CountApp />, 
+    <TodoApp />, 
     document.getElementById('root')
 );
 
