@@ -1,4 +1,7 @@
 import React from 'react'
+import TodoElement from './TodoElement';
+import AddTodo from './AddTodo';
+
 
 //export default classって何？
 //そのclassがimportされるときにdefaultで呼ばれるってこと
@@ -15,45 +18,42 @@ export default class TodoApp extends React.Component {
     // value変更関数
     // stateを更新するときは、setState関数を使うこと。直接変更はしてはいけない。
     // ※stateはImmutable(不変)であるべきとされている。関数型の考え方に近い。
-    onChange(e) {
-        this.setState({value: e.target.value})
+    onChange(keyValue) {
+        this.setState(keyValue);
     }
 
     // todoリスト追加関数
-    add() {
+    add(todoElement) {
         this.setState({
-            //pushは破壊的メソッドでは元のthis.state.todoListまで変更してしまう。
-            //concatは非破壊的メソッドのため元のsate自体は変更されない（Reactの要件を満たしている)
-            todoList: this.state.todoList.concat(this.state.value),
-            value: "",
-        })
+          todoList: this.state.todoList.concat(todoElement),
+          value: ""
+        });
     }
 
     //必須関数 render関数
     //render関数はpureな関数であるべき
     //render関数内でstateを変更してはいけないということ
     //なぜかは、stateの変更が起こるとrender関数が呼ばれるため無限ループになる
-    render() {
-//        console.log(this.state.todoList)
-        const todoListNode = this.state.todoList.map( (todo,index) => {
-            return <li key={index}>{todo}</li>
-        })
-
-        return(
-            <div>
-                <h1>Todo App</h1>
-                <div>
-                    <input
-                        type="text"
-                        value={this.state.value}
-                        onChange={e => this.onChange(e)}
-                    />    
-                </div>
-                <button onClick={() => this.add()}>追加</button>
-                <ul>
-                    {todoListNode}
-                </ul>
-            </div>
-        )
-    }
+   render() {
+     const todoListNode = this.state.todoList.map(element => {
+       return (
+         <TodoElement
+           key={element.id}
+           element={element}
+           {...this.state}
+         />
+       );
+     });
+     return (
+       <div>
+         <h1>TODO App</h1>
+         <AddTodo
+           {...this.state}
+           onChange={this.onChange.bind(this)}
+           add={this.add.bind(this)}
+         />
+         <ul>{todoListNode}</ul>
+       </div>
+     );
+   }
 }
