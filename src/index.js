@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import HelloWorld from './HelloWorld';
+import CountApp from './CountApp';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <HelloWorld />, 
+    <CountApp />, 
     document.getElementById('root')
 );
 
