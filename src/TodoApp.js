@@ -30,6 +30,20 @@ export default class TodoApp extends React.Component {
         });
     }
 
+    handleDelete(id) {
+        //現在のリストをコピー
+        let todoList = this.state.todoList.concat()
+        //変数初期化
+        let index = 0
+        todoList.map((element, idx) => {
+            if(element.id == id){
+                index = idx
+            }
+        })
+        todoList.splice(index, 1)
+        this.setState({todoList: todoList})
+    }
+
     //必須関数 render関数
     //render関数はpureな関数であるべき
     //render関数内でstateを変更してはいけないということ
@@ -40,6 +54,7 @@ export default class TodoApp extends React.Component {
          <TodoElement
            key={element.id}
            element={element}
+           onDelete={() => this.handleDelete()}
            {...this.state}
          />
        );
